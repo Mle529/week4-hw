@@ -1,0 +1,70 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body,
+.container {
+    height: 100%;
+
+
+}
+
+body {
+    background-color: #ebebf0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    padding: 30px 20px 0px 20px;
+    align-content: center;
+    text-align: center;
+}
+
+#start-button {
+    text-align: center;
+    box-sizing: border-box;
+    padding:20px;
+    background-color: rgb(64, 115, 190);
+    width: fit-content;
+    color: white;
+    font-weight: bold;
+    font-size: 24pt;
+}
+
+.content {
+    text-align: center;
+}
+
+.highScores {
+    float: left;
+    color: rgb(64, 115, 190);
+    padding: 10px;
+    margin: 5px;
+    font-size: 14pt;
+}
+
+.time {
+    color: rgb(64, 115, 190);
+    padding: 10px;
+    margin: 5px;
+    font-size: 16pt;
+}
+
+#question {
+    font-weight: bold;
+    font-size: 14pt;
+}
+
+.choice {
+    margin: 5px;
+    border: 10px;
+    padding: 10px;
+    background-color: rgb(64, 115, 190);
+    box-sizing: border-box;
+    width: fit-content;
+    color: white;
+    font-weight: bold;
+}
