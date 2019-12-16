@@ -1,3 +1,5 @@
+
+// Array with questions and answers
 var questions = [
     {
         title: "Commonly used data types DO NOT include:",
@@ -41,7 +43,8 @@ var questions = [
     }
 ];
 
-var timer = document.querySelector("#timer");
+// Varibles for different elements
+var timeEl = document.querySelector("#timer");
 var start = document.querySelector("#start-button");
 var quiz = document.querySelector("#quiz");
 var title = document.querySelector("#title");
@@ -49,16 +52,17 @@ var choiceA = document.querySelector("#A");
 var choiceB = document.querySelector("#B");
 var choiceC = document.querySelector("#C");
 var choiceD = document.querySelector("#D");
+var correct = document.querySelector("#correctOrNo");
+var viewScore = document.querySelector("#scores");
 
-var timer = 75;
-var score = 0;
+var secondsLeft = 75;
+var scores = 0;
 
 var lastQuestion = questions.length - 1;
 var runQuestion = 0;
-var count = 0;
 
 
-
+// This is to render the questions and choices
 function renderQuestion() {
     var ques = questions[runQuestion];
 
@@ -70,31 +74,32 @@ function renderQuestion() {
 
 }
 
+// click event to start the quiz
 start.addEventListener("click", startQuiz);
-choiceA.addEventListener("click", choiceA);
 
+// function to start the quiz and timer
 function startQuiz() {
     start.style.display = "none";
     renderQuestion();
     quiz.style.display = "block";
 
     timer = setInterval(75000);
+
 }
 
-function rendertimer() {
-    timer.textContent = timer
+function renderTimer() {
+    Text.textcontent = timer
 }
 
+// function to check the answers if they are correct or wrong
 function checkAnswers(answers) {
     if (answer === questions[runQuestion].correct) {
-        score++;
         answerIsCorrect();
     }
     else {
         answerIsWrong();
     }
 
-    count = 0;
     if (runQuestion < lastQuestion) {
         runQuestion++;
         renderQuestion();
@@ -104,10 +109,20 @@ function checkAnswers(answers) {
     }
 }
 
+
+
 function answerIsCorrect() {
-    document.getElementById(runQuestion);
+    correct.innerText = "correct!";
+    scores++;
+    viewScore.innerText = "Score " + scores;
 }
 
 function answerIsWrong() {
-    document.getElementById(runQuestion);
+    correct.innerText = "wrong!";
+}
+
+// function to store the score
+function storeScore() {
+    var retrievedInfo = localStorage.getItem('totalScore');
+    console.log('totalScore: ', JSON.parse(retrievedInfo));
 }

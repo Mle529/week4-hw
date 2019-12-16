@@ -16,10 +16,9 @@
 
 <body>
 
+    <!--Nav bar with score and timer-->
     <nav class="navbar navbar-light" style="background-color: white;">
-        <div class="highScores">
-            View High Scores
-        </div>
+        <div class="scores">Score</div>
 
         <div class="time">
             Time: <span id="timer">0</span>
@@ -27,27 +26,32 @@
     </nav>
 
     <div class="container">
+        <!--This is for the start button to start the quiz-->
         <div class="content">
             <button id="start-button">
                 Start Quiz
             </button>
         </div>
 
+        <!--This is the quiz content. The quiz will be hidden until the start button is clicked.-->
         <div id="quiz" style="display: none">
             <div id="title"></div>
             <div id="choices">
-                <div class="choice" id="A" onclick="checkAnswer('A')"></div>
-                <div class="choice" id="B" onclick="checkAnswer('B')"></div>
-                <div class="choice" id="C" onclick="checkAnswer('C')"></div>
-                <div class="choice" id="D" onclick="checkAnswer('D')"></div>
+                <div class="choice" id="A"></div>
+                <div class="choice" id="B"></div>
+                <div class="choice" id="C"></div>
+                <div class="choice" id="D"></div>
+            </div>
+
+            <div id="response">
+                <p id="correctOrNot"></p>
             </div>
 
         </div>
+    </div>
 
-
-        <!--CSS Script-->
-
-        <script src="./questions.js"></script>
+    <!--CSS Script-->
+    <script src="./questions.js"></script>
 </body>
 
 </html>
