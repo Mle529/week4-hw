@@ -111,34 +111,11 @@ function checkAnswers() {
         clearInterval(timer);
     }
     if (questions === 4) {
-        finalQuestion();
+        finalAnswer();
     }
 }
 
-function finalQuestion() {
-
-    newQuestion.innerHTML = questions[4].title;
-
-    choiceA.innerText = "";
-    choiceB.innerText = "";
-    choiceC.innerText = "";
-    choiceD.innerText = "";
-
-    var userInput = document.createElement("INPUT");
-    userInput.setAttribute("type", "text");
-    userInput.innerText = "Write Here";
-    document.body.appendChild(userInput);
-
-    var userInfo = userInput.value;
-
-    var submitButton = document.createElement("BUTTON");
-    submitButton.innertext = "enter";
-    document.body.appendChild(submitButton);
-
-    submitButton.addEventListener("click", finalAnswer);
-
-}
-
+// this is a function to submit the quiz when the user has completed.
 function finalAnswer() {
 
     var userInfo = userInput.value;
@@ -154,13 +131,35 @@ function finalAnswer() {
     doneButton.innerHTML = "Complete";
     document.appendChild(doneButton);
 
-    doneButton.addEventListener("click", userStats);
+    doneButton.addEventListener("click", finalQuestion);
 }
 
+// function to set up a new question that asks for user input
+function finalQuestion() {
+
+    newQuestion.innerHTML = questions[4].title;
+
+    var userInput = document.createElement("INPUT");
+    userInput.setAttribute("type", "text");
+    userInput.innerText = "Write Here";
+    document.body.appendChild(userInput);
+
+    var userInfo = userInput.value;
+
+    var submitButton = document.createElement("BUTTON");
+    submitButton.innertext = "enter";
+    document.body.appendChild(submitButton);
+
+    submitButton.addEventListener("click", userStats);
+
+}
+
+// function to add that enter the user initial and store the score.
 function userStats() {
+
     userInput.remove();
     doneButton.remove();
-    correct.innerText = "";
+
 
     newQuestion.innerText = "Please enter your initial";
 
@@ -170,7 +169,7 @@ function userStats() {
 
     var finalScore = userInitial.value + scores
 
-    localStorage.setItem('finalScore', JSON.stringify(testNumber));
+    localStorage.setItem('finalScore', JSON.stringify(retrievedInfo));
 }
 
 
