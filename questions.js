@@ -7,7 +7,7 @@ var questions = [
         choiceB: "booleans",
         choiceC: "alerts",
         choiceD: "numbers",
-        answer: "alerts"
+        answer: "B"
     },
     {
         title: "The condition in an if / else statement is enclosed within ____.",
@@ -15,7 +15,7 @@ var questions = [
         choiceB: "curly brackets",
         choiceC: "parentheses",
         choiceD: "square brackets",
-        answer: "parentheses"
+        answer: "C"
     },
     {
         title: "Inside which HTML element do we put the Javascript?",
@@ -23,15 +23,15 @@ var questions = [
         choiceB: "script",
         choiceC: "javascript",
         choiceD: "js",
-        answer: "script"
+        answer: "B"
     },
     {
         title: "How does a FOR loop start?",
         choiceA: "for (i=0; i <= 5)",
         choiceB: "for i=0",
-        choiceC: "for (i=0; i < 5; i++)",
-        choiceD: "for (i < 5; i+)",
-        answer: "for (i=0; i < 5; i++)"
+        choiceC: "for (var i=0; i < 5; i++)",
+        choiceD: "for (var i < 5; i+)",
+        answer: "C"
     },
     {
         title: "How do you declare a Javascript varible?",
@@ -39,7 +39,7 @@ var questions = [
         choiceB: "v carName",
         choiceC: "varible carName",
         choiceD: "all of the above",
-        answer: "var carName"
+        answer: "A"
     }
 ];
 
@@ -53,7 +53,8 @@ var choiceB = document.querySelector("#B");
 var choiceC = document.querySelector("#C");
 var choiceD = document.querySelector("#D");
 var correct = document.querySelector("#correctOrNo");
-var viewScore = document.querySelector("#scores");
+var viewScore = document.querySelector(".scores");
+var interval;
 
 var secondsLeft = 75;
 var scores = 0;
@@ -62,7 +63,6 @@ var lastQuestion = questions.length - 1;
 var runQuestion = 0;
 
 
-// This is to render the questions and choices
 function renderQuestion() {
     var ques = questions[runQuestion];
 
@@ -74,16 +74,17 @@ function renderQuestion() {
 
 }
 
-// click event to start the quiz
-start.addEventListener("click", startQuiz);
-
 // function to start the quiz and timer
 function startQuiz() {
     start.style.display = "none";
     renderQuestion();
     quiz.style.display = "block";
+    timeEl.textContent = secondsLeft;
 
-    timer = setInterval(75000);
+    interval = setInterval(function () {
+        secondsLeft--;
+        timeEl.textContent = secondsLeft
+    }, 1000);
 
 }
 
@@ -91,9 +92,11 @@ function renderTimer() {
     Text.textcontent = timer
 }
 
+
 // function to check the answers if they are correct or wrong
-function checkAnswers(answers) {
-    if (answer === questions[runQuestion].correct) {
+function checkAnswers() {
+    console.log(event.target.getAttribute("value"));
+    if (event.target.getAttribute("value") === questions[runQuestion].answer) {
         answerIsCorrect();
     }
     else {
@@ -107,18 +110,80 @@ function checkAnswers(answers) {
     else {
         clearInterval(timer);
     }
+    if (questions === 4) {
+        finalQuestion();
+    }
+}
+
+function finalQuestion() {
+
+    newQuestion.innerHTML = questions[4].title;
+
+    choiceA.innerText = "";
+    choiceB.innerText = "";
+    choiceC.innerText = "";
+    choiceD.innerText = "";
+
+    var userInput = document.createElement("INPUT");
+    userInput.setAttribute("type", "text");
+    userInput.innerText = "Write Here";
+    document.body.appendChild(userInput);
+
+    var userInfo = userInput.value;
+
+    var submitButton = document.createElement("BUTTON");
+    submitButton.innertext = "enter";
+    document.body.appendChild(submitButton);
+
+    submitButton.addEventListener("click", finalAnswer);
+
+}
+
+function finalAnswer() {
+
+    var userInfo = userInput.value;
+
+    if (questions[4].answer === userInfo) {
+        answerIsCorrect();
+    } else {
+        answerIsWrong();
+    }
+
+    submitButton.remove();
+    var doneButton = document.createElement("BUTTON");
+    doneButton.innerHTML = "Complete";
+    document.appendChild(doneButton);
+
+    doneButton.addEventListener("click", userStats);
+}
+
+function userStats() {
+    userInput.remove();
+    doneButton.remove();
+    correct.innerText = "";
+
+    newQuestion.innerText = "Please enter your initial";
+
+    var userInitial = document.createElement("INPUT");
+    userInitial.setAttribute("type", "text");
+    document.body.appendChild(userInitial);
+
+    var finalScore = userInitial.value + scores
+
+    localStorage.setItem('finalScore', JSON.stringify(testNumber));
 }
 
 
-
+// Check if the answer is right or wrong. Subtract 15 secs for every wrong answer. 
 function answerIsCorrect() {
-    correct.innerText = "correct!";
+    correct.innerText = "Correct!";
     scores++;
     viewScore.innerText = "Score " + scores;
 }
 
 function answerIsWrong() {
-    correct.innerText = "wrong!";
+    secondsLeft = secondsLeft - 15;
+    correct.innerText = "Wrong!";
 }
 
 // function to store the score
@@ -126,3 +191,14 @@ function storeScore() {
     var retrievedInfo = localStorage.getItem('totalScore');
     console.log('totalScore: ', JSON.parse(retrievedInfo));
 }
+
+
+
+// click event to start the quiz
+start.addEventListener("click", startQuiz);
+
+// click event for question choices
+choiceA.addEventListener("click", checkAnswers)
+choiceB.addEventListener("click", checkAnswers)
+choiceC.addEventListener("click", checkAnswers)
+choiceD.addEventListener("click", checkAnswers)
